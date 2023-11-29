@@ -6,11 +6,10 @@ VAR
 ASSIGN
   init(estado) := desligada;
   next(estado) := case
-                    button & estado = desligada : ligada;
-                    button & estado = ligada : desligada;
-                    estado = ligada : {ligada, queimada};
                     estado = queimada : queimada;
-                    TRUE : estado;
+                    !button : desligada;
+                    estado = ligada: {ligada, queimada};
+                    TRUE : ligada;
                   esac;
 
 -- Uma lâmpada pode estar ligada no futuro.
@@ -37,4 +36,4 @@ CTLSPEC EF(AG(estado = queimada))
 CTLSPEC AG((estado = desligada) -> AX(estado != queimada))
 
 -- Uma lâmpada pode voltar a estar ligada depois de queimada
--- CTLSPEC F(queimada -> lampada)
+-- CTLSPEC AF((estado = queimada) -> AG(estado = queimada))
