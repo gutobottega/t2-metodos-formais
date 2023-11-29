@@ -22,6 +22,6 @@ DEFINE
     lampada := estado = s1;
     timeout := timer = 0;
 
-LTLSPEC G(timer1.button -> X(timer1.lampada));
-LTLSPEC G(timer1.lampada -> F(!timer1.lampada U timer1.button));
-LTLSPEC G(timer1.lampada -> F(!timer1.lampada ->(!timer1.lampada U timer1.button)));
+LTLSPEC G(button -> X(lampada));
+LTLSPEC G(lampada -> F(!lampada U button));
+LTLSPEC G(lampada -> F(!lampada ->(!lampada U button)));
