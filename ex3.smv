@@ -11,36 +11,30 @@ ASSIGN
                     estado = ligada : {ligada, queimada};
                     estado = queimada : queimada;
                     TRUE : estado;
-                  esac
+                  esac;
 
+-- Uma lâmpada pode estar ligada no futuro.
+-- LTLSPEC G estado = ligada;
 
+-- Uma lâmpada eventualmente pode permanecer sempre queimada.
+-- LTLSPEC F G estado = queimada;
 
+-- Uma lâmpada não pode passar de desligada para queimada.
+-- LTLSPEC G ! (estado = desligada -> X estado != queimada);
 
-• Uma lâmpada pode estar ligada no futuro.
-LTLSPEC G estado = ligada;
+-- Uma lâmpada pode voltar a estar ligada depois de queimada.
+-- LTLSPEC G (estado = queimada -> F estado = ligada);
 
-• Uma lâmpada eventualmente pode permanecer sempre queimada.
-LTLSPEC F G estado = queimada;
+-- CTL
 
-• Uma lâmpada não pode passar de desligada para queimada.
-LTLSPEC G ! (estado = desligada -> X estado != queimada);
+-- Uma lâmpada pode estar ligada no futuro
+CTLSPEC EF(estado = ligada)
 
-• Uma lâmpada pode voltar a estar ligada depois de queimada.
-LTLSPEC "G (estado = queimada -> F estado = ligada);
+-- Uma lâmpada eventualmente pode permanecer sempre queimada
+CTLSPEC EF(AG(estado = queimada))
 
+-- Uma lâmpada não pode passar de desligada para queimada
+CTLSPEC AG((estado = desligada) -> AX(estado != queimada))
 
-
-
-
-
-# Uma lâmpada pode estar ligada no futuro
-LTLSPEC EF(estado = ligada)
-
-# Uma lâmpada eventualmente pode permanecer sempre queimada
-LTLSPEC EF(AG(estado = queimada))
-
-# Uma lâmpada não pode passar de desligada para queimada
-LTLSPEC G(!lampada -> X(queimada))
-
-# Uma lâmpada pode voltar a estar ligada depois de queimada
-LTLSPEC F(queimada -> lampada)
+-- Uma lâmpada pode voltar a estar ligada depois de queimada
+-- CTLSPEC F(queimada -> lampada)
