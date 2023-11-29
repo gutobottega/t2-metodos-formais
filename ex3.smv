@@ -6,23 +6,16 @@ VAR
 ASSIGN
   init(estado) := desligada;
   next(estado) := case
-                    estado = queimada : queimada;
-                    !button : desligada;
-                    estado = ligada: {ligada, queimada};
-                    TRUE : ligada;
+                    -----------------------------------------
+                    -- CASO SEMPRE QUEIMADA
+                    -- a ver
+                    -- CASO POSSA VOLTAR A LIGAR
+                    button & estado != desligada : {queimada, ligada};
+                    !button & estado = queimada : queimada;
+                    button : ligada; -- (somente desligada vai chegar aqui)
+                    TRUE : desligada;
+                    ------------------------------------------
                   esac;
-
--- Uma lâmpada pode estar ligada no futuro.
--- LTLSPEC G estado = ligada;
-
--- Uma lâmpada eventualmente pode permanecer sempre queimada.
--- LTLSPEC F G estado = queimada;
-
--- Uma lâmpada não pode passar de desligada para queimada.
--- LTLSPEC G ! (estado = desligada -> X estado != queimada);
-
--- Uma lâmpada pode voltar a estar ligada depois de queimada.
--- LTLSPEC G (estado = queimada -> F estado = ligada);
 
 -- CTL
 
@@ -30,10 +23,19 @@ ASSIGN
 CTLSPEC EF(estado = ligada)
 
 -- Uma lâmpada eventualmente pode permanecer sempre queimada
-CTLSPEC EF(AG(estado = queimada))
+
+-- CASO SEMPRE QUEIMADA
+-- CTLSPEC EF(AG(estado = queimada))
+
+-- CASO POSSA VOLTAR A LIGAR
+CTLSPEC EF(EG(estado = queimada))
+
 
 -- Uma lâmpada não pode passar de desligada para queimada
 CTLSPEC AG((estado = desligada) -> AX(estado != queimada))
 
 -- Uma lâmpada pode voltar a estar ligada depois de queimada
+-- CASO SEMPRE QUEIMADA
 -- CTLSPEC AF((estado = queimada) -> AG(estado = queimada))
+-- CASO POSSA VOLTAR A LIGAR
+CTLSPEC AG(estado = queimada -> EF(estado = ligada))
