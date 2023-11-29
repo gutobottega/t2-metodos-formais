@@ -2,29 +2,26 @@ MODULE main
 IVAR
     button: boolean;
 VAR
-    timer: 0..5;
-    estado: {s0, s1};
+    timer : 0..5;
+    estado : {s0, s1};
 ASSIGN
-    init(estado) := s0;
-    next(estado) := case
-        button & !lampada : s1; -- Liga qndo o botão está sendo apertado e estava desligado
-        timeout & lampada : s0; -- Desliga caso o timeout aconteça e estava ligado
-        lampada : s1; -- Mantem a lampada ligada caso nao tenha o timeout e ela ja estava ligada
-        TRUE : estado; -- Padrão: Mantém o estado atual
-                    esac;
-    next(timer) := case
-        button : 5; -- Reseta o timer para 5 qndo o botão está sendo apertado.
-        lampada : timer - 1; -- Diminui o timer enquanto a lampada está ligada.
-        TRUE: timer; -- Padrão: Mantém o estado atual
-                    esac;
+    init(estado) := s0;                                                               
+    next(estado) := case                                                              
+                      button & !lampada : s1;                                         
+                      timeout & lampada : s0;                                         
+                      lampada : s1;                                                   
+                      TRUE : estado;                                                  
+                    esac                                                              
+    next(timer) := case                                                               
+                     button : 5;                                                      
+                     lampada : timer - 1;                                             
+                     TRUE : timer;                                                    
+                   esac   
 
 DEFINE 
     lampada := estado = s1;
     timeout := timer = 0;
 
-# A lâmpada sempre irá ligar se o botão for pressionado.
-LTLSPEC  G(button -> X lampada)
-
-# uma vez que a lâmpada esteja ligada,
-# se não for pressionado o botão, ela não voltará a estar ligada.
-LTLSPEC G(lampada -> ( (F(button) U !lampada) ))
+LTLSPEC G(timer1.button -> X(timer1.lampada));
+LTLSPEC G(timer1.lampada -> F(!timer1.lampada U timer1.button));
+LTLSPEC G(timer1.lampada -> F(!timer1.lampada ->(!timer1.lampada U timer1.button)));
