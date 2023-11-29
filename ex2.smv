@@ -11,12 +11,12 @@ ASSIGN
                       timeout & lampada : s0;
                       lampada : s1;
                       TRUE : estado;
-                    esac
+                    esac;
     next(timer) := case
                      button : 5;
                      lampada : timer - 1;
                      TRUE : timer;
-                   esac   
+                   esac;
 
 DEFINE 
     lampada := estado = s1;
