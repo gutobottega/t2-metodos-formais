@@ -14,7 +14,7 @@ ASSIGN
                     esac;
     next(timer) := case
                      button : 5;
-                     lampada : timer - 1;
+                     lampada & timer > 1 : timer - 1;
                      TRUE : timer;
                    esac;
 
@@ -23,5 +23,4 @@ DEFINE
     timeout := timer = 0;
 
 LTLSPEC G(button -> X(lampada));
-LTLSPEC G(lampada -> F(!lampada U button));
-LTLSPEC G(lampada -> F(!lampada ->(!lampada U button)));
+LTLSPEC G(lampada -> F(!lampada -> G(!lampada U button)));
