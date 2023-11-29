@@ -5,17 +5,17 @@ VAR
     timer : 0..5;
     estado : {s0, s1};
 ASSIGN
-    init(estado) := s0;                                                               
-    next(estado) := case                                                              
-                      button & !lampada : s1;                                         
-                      timeout & lampada : s0;                                         
-                      lampada : s1;                                                   
-                      TRUE : estado;                                                  
-                    esac                                                              
-    next(timer) := case                                                               
-                     button : 5;                                                      
-                     lampada : timer - 1;                                             
-                     TRUE : timer;                                                    
+    init(estado) := s0;
+    next(estado) := case
+                      button & !lampada : s1;
+                      timeout & lampada : s0;
+                      lampada : s1;
+                      TRUE : estado;
+                    esac
+    next(timer) := case
+                     button : 5;
+                     lampada : timer - 1;
+                     TRUE : timer;
                    esac   
 
 DEFINE 
