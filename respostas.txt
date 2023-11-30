@@ -1,18 +1,48 @@
+Nomes:
 Augusto Bottega
 Gustavo Lodi Vidaletti
 Mathias Kauffmann
 Ramiro Nascimento
 Tiago Villa
 
-2)
-a. No arquivo ex2.smv
-b. No arquivo ex2.smv
-c. Todas as propriedades forma válidas para o modelo
+=============================================================
+2)a. No arquivo ex2.smv
+=============================================================
+2)b. No arquivo ex2.smv
+=============================================================
+2)c. Todas as propriedades forma válidas para o modelo
+=============================================================
 
-3)
-a. No arquivo ex3.smv
-b. Não foi possivel/conseguimos gerar o diagrama pelo Fasten.
-c. A propriedade "Uma lâmpada pode voltar a estar ligada depois de queimada" foi a única negada pois a lâmpada, segundo o nosso modelo, após queimada nunca muda deste estado.
+=============================================================
+3)a. No arquivo ex3.smv
+=============================================================
+3)b. Código criado pelo Fasten:
+MODULE ex3(button)
+  VAR
+    estado : {ligada, desligada, queimada};
+  ASSIGN
+    next(estado) := case
+        estado = queimada & button : queimada;
+        estado = queimada & !(button) : queimada;
+        estado = desligada & button : ligada;
+        estado = desligada & !(button) : desligada;
+        estado = ligada & button : ligada;
+        estado = ligada & button : queimada;
+        estado = ligada & !(button) : desligada;
+        TRUE : estado;
+      esac;
+    init(estado) := desligada;
+
+MODULE main
+  VAR
+    timer : ex3(TRUE);
+=============================================================
+A diferença do nosso código para esse é que a variavel button
+é utilizada sempre para calcular o próximo estado, desconsiderando
+algumas regras de negócio, como por exemplo, a lâmpada queimada
+
+=============================================================
+3)c. A propriedade "Uma lâmpada pode voltar a estar ligada depois de queimada" foi a única negada pois a lâmpada, segundo o nosso modelo, após queimada nunca muda deste estado.
 
 
 * deixamos comentado no arquivo ex3.smv a implementação diferente,
