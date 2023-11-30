@@ -6,19 +6,20 @@ VAR
 ASSIGN
   init(estado) := desligada;
   next(estado) := case
-                    -----------------------------------------
-                    -- CASO SEMPRE QUEIMADA
-                    estado = queimada : queimada;
-                    button & estado = desligada : ligada;
-                    button & estado = ligada : {ligada, queimada};
-                    TRUE : desligada;
-                    -- CASO POSSA VOLTAR A LIGAR
-                    -- button & estado != desligada : {queimada, ligada};
-                    -- !button & estado = queimada : queimada;
-                    -- button : ligada; -- (somente desligada vai chegar aqui)
-                    -- TRUE : desligada;
-                    ------------------------------------------
-                  esac;
+    -----------------------------------------
+    -- CASO SEMPRE QUEIMADA
+    estado = queimada : queimada;
+    button & estado = desligada : ligada;
+    button & estado = ligada : {ligada, queimada};
+    TRUE : desligada;
+    ------------------------------------------
+    -- CASO POSSA VOLTAR A LIGAR
+    -- button & estado != desligada : {queimada, ligada};
+    -- !button & estado = queimada : queimada;
+    -- button : ligada; -- (somente desligada vai chegar aqui)
+    -- TRUE : desligada;
+    ------------------------------------------
+  esac;
 
 -- CTL
 
