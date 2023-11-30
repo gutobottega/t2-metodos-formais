@@ -1,0 +1,15 @@
+Augusto Bottega
+Gustavo Lodi Vidaletti
+Mathias Kauffmann
+Ramiro Nascimento
+Tiago Villa
+
+2)
+a. No arquivo ex2.smv
+b. No arquivo ex2.smv
+c. Todas as propriedades forma válidas para o modelo
+
+3)
+a. No arquivo ex3.smv
+b. Não foi possivel/conseguimos gerar o diagrama pelo Fasten.
+c. A propriedade "Uma lâmpada pode voltar a estar ligada depois de queimada" foi a única negada pois a lâmpada, segundo o nosso modelo, após queimada nunca muda deste estado.
